@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Quiz</title>
+  <style>
+    
+    body {
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+}
+
+#quiz-form {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 2px;
+  background-color: #fff;
+   
+
+}
+
+.question-item {
+  margin-bottom: 30px;
+}
+
+.answer-item {
+  margin-bottom: 10px;
+}
+
+button {
+ 
+  padding: 5px 12px;
+  border: none;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color:#e1e4e2;
+}
+
+#alert {
+  display: none;
+  background-color:#8ce886 ;
+  padding: 10px;
+  border-radius: 0px;
+  margin-bottom: 20px;
+  text-align: center;
+   color:#0c0c0c;
+  font-weight: bold;
+  width: 200px; 
+  height: 50px;
+  
+  position: fixed;
+  bottom: 0;
+  right :0;
+}
+
+
+  </style>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const quizForm = document.getElementById('quiz-form');
+    const alertMessage = document.getElementById('alert');
+
+    quizForm.addEventListener('submit', function (event) {
+      event.preventDefault(); 
+
+      const answers = {
+        'answer-1': 'true',
+        'answer-2': 'true',
+        'answer-3': 'true',
+      };
+
+      const userAnswers = {};
+      const answerInputs = document.querySelectorAll('.answer:checked');
+
+      answerInputs.forEach(function (input) {
+        const questionName = input.getAttribute('name');
+        const answerValue = input.value;
+        userAnswers[questionName] = answerValue;
+        
+    if (answerValue === answers[questionName]) {
+      
+      input.parentElement.style.color = 'green';
+    } else {
+      input.parentElement.style.color = 'red';
+    }
+      });
+
+      if (compareAnswers(answers, userAnswers)) {
+        showAlert('Congratulations!! You got them all right!');
+      } 
+    });
+
+    function compareAnswers(correctAnswers, userAnswers) {
+      for (const question in correctAnswers) {
+        if (correctAnswers[question] !== userAnswers[question]) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function showAlert(message) {
+      alertMessage.innerHTML = '<div class="alert-title">' + message + '</div>';
+      alertMessage.style.display = 'block';
+    }
+  });
+</script> 
+</head>
+<body>
+  <div id="alert">
+    <div class="alert-title">Congratulations!!</div>
+    You got them all right!
+  </div>
+  <form id="quiz-form">
+    <ol>
+      <li class="question-item">
+        <div>What does this code return? (<code>0 || '' || false || "Hi"</code>)</div>
+        <div>
+          <ol>
+            <li class="answer-item">
+              <label>
+                <input class="answer" type="radio" name="answer-1" value="false">
+                <code>0</code>
+              </label>
+            </li>
+            <li class="answer-item">
+              <label>
+                <input class="answer" type="radio" name="answer-1" value="true">
+                <code>"Hi"</code>
+              </label>
+            </li>
+            <li class="answer-item">
+              <label>
+                <input class="answer" type="radio" name="answer-1" value="false">
+                <code>false</code>
+              </label>
+            </li>
+            <li class="answer-item">
+              <label>
+                <input class="answer" type="radio" name="answer-1" value="false">
+                <code>''</code>
+              </label>
+            </li>
+          </ol>
+        </div>
+      </li>
+      <li class="question-item">
+        <div>What is it called when a function calls itself?</div>
+        <div>
+          <ol>
+            <li class="answer-item">
+              <label>
+                <input class="answer" type="radio" name="answer-2" value="false">
+                Inception
+              </label>
+            </li>
+            <li class="answer-item">
+              <label>
+                <input class="answer" type="radio" name="answer-2" value="false">
+                Self-Referential
+              </label>
+            </li>
+            <li class="answer-item">
+              <label>
+                <input class="answer" type="radio" name="answer-2" value="true">
+                Recursion
+              </label>
+            </li>
+            <li class="answer-item">
+              <label>
+                <input class="answer" type="radio" name="answer-2" value="false">
+                Who Cares
+              </label>
+            </li>
+          </ol>
+        </div>
+      </li>
+      <li class="question-item">
+        <div>How do you access the value of the <code>data-count</code> data attribute in JavaScript?</div>
+        <div>
+          <ol>
+            <li class="answer-item">
+              <label>
+                <input class="answer" type="radio" name="answer-3" value="true">
+                <code>element.dataset.count</code>
+              </label>
+            </li>
+            <li class="answer-item">
+              <label>
+                <input class="answer" type="radio" name="answer-3" value="false">
+                <code>element.dataAttribute.count</code>
+              </label>
+            </li>
+            <li class="answer-item">
+              <label>
+                <input class="answer" type="radio" name="answer-3" value="false">
+                <code>element.dataset.dataCount</code>
+              </label>
+            </li>
+            <li class="answer-item">
+              <label>
+                <input class="answer" type="radio" name="answer-3" value="false">
+                <code>element.dataCount</code>
+              </label>
+            </li>
+          </ol>
+        </div>
+      </li>
+    </ol>
+    <button type="submit">Check</button>
+  </form>
+</body>
+</html>
